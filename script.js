@@ -17,7 +17,7 @@ function addBookToLibrary(title, author, pageNumber, hasRead) {
 }
 
 function displayBooks(){
-  const mainContent = document.querySelector('main');
+  const mainContent = document.querySelector('.book-grid');
   for(const book of myLibrary){
     const contentBox = document.createElement('div');
     const bookTitle =  document.createElement('h2');
@@ -38,6 +38,10 @@ function displayBooks(){
     contentBox.append(pageNumber);
     mainContent.append(contentBox)
   }
+}
+
+function showAddBookModal(){
+  
 }
 
 addBookToLibrary('Great Gatsby', 'fscott', '200', false);

@@ -1,3 +1,9 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+}
 body{
     height: 100vh;
     width: 100%;
@@ -6,6 +12,7 @@ body{
     padding: 0;
     margin: 0;
     font-family: sans-serif;
+    background-color: #EEE;
 }
 
 header{
@@ -17,17 +24,55 @@ h1{
     margin: 0rem;
 }
 main{
+    background-color: #CCC;
+}
+.add-book-button{
+    text-align: center;
+    margin: 30px auto;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: fit-content;
+    cursor: pointer;
+}
+.add-book-button:hover{
+    background-color: #999;
+}
+.add-book-modal{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+}
+h3{
+    font-size: 2rem;
+    text-align: center;
+    padding: 5px;
+}
+label{
+    display: inline-block;
+    width: 100px;
+}
+div.form-container:last-of-type label{
+    width: 230px;
+}
+div.form-container{
+    padding: 5px;
+    font-size: 1.5rem;
+}
+.book-grid{
     display: grid;
     gap: 20px;
-    padding: 20px;
+    padding: 0px 20px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
     justify-content: center;
-    background-color: #CCC;
 }
 
 .book-container{
     background-color: #EEE;
     height: fit-content;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
