@@ -1,4 +1,5 @@
 let myLibrary = [];
+const bookForm = document.querySelector('.book-form');
 
 function Books(title, author, pageNumber, hasRead) {
   this.title = title,
@@ -41,8 +42,20 @@ function displayBooks(){
 }
 
 function showAddBookModal(){
-  
+  bookForm.classList.toggle('hidden')
 }
+
+const addBookButton = document.querySelector('.add-book-button');
+addBookButton.addEventListener('click', (e) => {
+  e.stopPropagation();
+  showAddBookModal();
+});
+window.addEventListener('click', (e) => {
+  if (!bookForm.classList.contains('hidden')){
+    console.log(e)
+    showAddBookModal();
+  }
+})
 
 addBookToLibrary('Great Gatsby', 'fscott', '200', false);
 addBookToLibrary('Diary of a wimpy Kid', 'Jeff Kinney', '150', true);
