@@ -69,27 +69,46 @@ window.addEventListener('click', (e) => {
     reviewNode = reviewNode.parentNode;
   }
   if (exitForm && !bookForm.classList.contains('hidden')) {
+    const validationMessage = document.querySelector('.validation-message');
+    if (!validationMessage.classList.contains('hidden')) validationMessage.classList.toggle('hidden')
     toggleAddBookModal();
     main.removeAttribute('style');
     header.removeAttribute('style');
   }
 })
 
+//form validation
+function validateNewBookForm() {
+  const title = document.querySelector('#new-book-title').value;
+  return title ? true : false;
+}
+function displayFormValidation() {
+  const formValidationMessage = document.querySelector('.validation-message');
+  if (formValidationMessage.classList.contains('hidden')){
+    formValidationMessage.classList.toggle('hidden');
+  }
+}
+
 //adds new book to library
 function addNewBook() {
   const addBookButton = document.querySelector('.add-book-button');
   const mainContent = document.querySelector('.book-grid');
   addBookButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    const bookTitle = document.querySelector('#new-book-title');
-    const bookAuthor = document.querySelector('#new-book-author');
-    const pageNumber = document.querySelector('#new-book-pages');
-    addBookToLibrary(bookTitle.value, bookAuthor.value, pageNumber.value);
-    mainContent.innerHTML = '';
-    displayBooks();
-    toggleAddBookModal();
-    main.removeAttribute('style');
-    header.removeAttribute('style');
+    if (validateNewBookForm()) {
+      console.log(e)
+      const bookTitle = document.querySelector('#new-book-title');
+      const bookAuthor = document.querySelector('#new-book-author');
+      const pageNumber = document.querySelector('#new-book-pages');
+      addBookToLibrary(bookTitle.value, bookAuthor.value, pageNumber.value);
+      mainContent.innerHTML = '';
+      displayBooks();
+      toggleAddBookModal();
+      main.removeAttribute('style');
+      header.removeAttribute('style');
+    }
+    else{
+      displayFormValidation();
+    }
   })
 }
 addNewBook();
