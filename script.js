@@ -50,11 +50,19 @@ addBookButton.addEventListener('click', (e) => {
   e.stopPropagation();
   showAddBookModal();
 });
+
 window.addEventListener('click', (e) => {
-  if (!bookForm.classList.contains('hidden')){
-    console.log(e)
-    showAddBookModal();
+  let reviewNode = e.target;
+  let exitForm = true;
+  while (reviewNode.nodeName !== 'BODY') {
+    console.log(reviewNode.classList)
+    if (reviewNode.classList.contains('book-form')) {
+      exitForm = false;
+      break;
+    }
+    reviewNode = reviewNode.parentNode;
   }
+  if (exitForm) showAddBookModal();
 })
 
 addBookToLibrary('Great Gatsby', 'fscott', '200', false);
