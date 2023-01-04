@@ -1,5 +1,7 @@
 let myLibrary = [];
 const bookForm = document.querySelector('.book-form');
+const newBookButton = document.querySelector('.new-book-button');
+
 
 function Books(title, author, pageNumber, hasRead) {
   this.title = title,
@@ -45,26 +47,41 @@ function showAddBookModal(){
   bookForm.classList.toggle('hidden')
 }
 
-const addBookButton = document.querySelector('.add-book-button');
-addBookButton.addEventListener('click', (e) => {
+newBookButton.addEventListener('click', (e) => {
   e.stopPropagation();
   showAddBookModal();
+  addNewBook();
 });
 
+//hides add book modal
 window.addEventListener('click', (e) => {
   let reviewNode = e.target;
   let exitForm = true;
-  while (reviewNode.nodeName !== 'BODY') {
-    console.log(reviewNode.classList)
+  while (reviewNode && reviewNode.nodeName !== 'BODY') {
     if (reviewNode.classList.contains('book-form')) {
       exitForm = false;
       break;
     }
     reviewNode = reviewNode.parentNode;
   }
-  if (exitForm) showAddBookModal();
+  if (exitForm && !bookForm.classList.contains('hidden')) showAddBookModal();
 })
 
+//adds new book to library
+function addNewBook() {
+  const addBookButton = document.querySelector('.add-book-button');
+  const mainContent = document.querySelector('.book-grid');
+  addBookButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const bookTitle = document.querySelector('#new-book-title');
+    const bookAuthor = document.querySelector('#new-book-author');
+    const pageNumber = document.querySelector('#new-book-pages');
+    addBookToLibrary(bookTitle.value, bookAuthor.value, pageNumber.value);
+    mainContent.innerHTML = '';
+    displayBooks();
+    showAddBookModal();
+  })
+}
 addBookToLibrary('Great Gatsby', 'fscott', '200', false);
 addBookToLibrary('Diary of a wimpy Kid', 'Jeff Kinney', '150', true);
 displayBooks();

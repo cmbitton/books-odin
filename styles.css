@@ -26,7 +26,7 @@ h1{
 main{
     background-color: #CCC;
 }
-.add-book-button{
+.new-book-button{
     text-align: center;
     margin: 30px auto;
     padding: 10px 15px;
@@ -36,7 +36,7 @@ main{
     width: fit-content;
     cursor: pointer;
 }
-.add-book-button:hover{
+.new-book-button:hover{
     background-color: #999;
 }
 .add-book-modal{
