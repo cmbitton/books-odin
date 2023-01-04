@@ -16,9 +16,12 @@ body{
 }
 
 header{
+    display: grid;
+    place-items: center;
     text-align: center;
-    align-self: center;
     font-size: 1.5rem;
+    background-color: #EEE;
+    height: 100%;
 }
 h1{
     margin: 0rem;
