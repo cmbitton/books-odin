@@ -21,18 +21,32 @@ function addBookToLibrary(title, author, pageNumber, hasRead) {
   myLibrary.push(book);
 }
 
+function removeBookFromLibrary(e){
+  const bookIndex = (e.target.parentNode.getAttribute('data-book-number'));
+  myLibrary.splice(bookIndex, 1);
+  displayBooks();
+}
+
 function displayBooks(){
   const mainContent = document.querySelector('.book-grid');
+  mainContent.innerHTML = '';
   for(const book of myLibrary){
     const contentBox = document.createElement('div');
     const bookTitle =  document.createElement('h2');
     const bookAuthor = document.createElement('p');
     const pageNumber = document.createElement('p');
+    const removeBook = document.createElement('button');
 
     contentBox.classList.add('book-container');
+    contentBox.setAttribute('data-book-number', myLibrary.indexOf(book))
     bookTitle.classList.add('book-title');
     bookAuthor.classList.add('book-author');
     pageNumber.classList.add('book-page-number');
+    removeBook.classList.add('remove-book-button');
+    removeBook.setAttribute('type', 'button');
+    removeBook.textContent = 'X'
+    removeBook.addEventListener('click', removeBookFromLibrary)
+    
 
     bookTitle.textContent = book.title;
     bookAuthor.textContent = book.author;
@@ -41,6 +55,7 @@ function displayBooks(){
     contentBox.append(bookTitle);
     contentBox.append(bookAuthor);
     contentBox.append(pageNumber);
+    contentBox.append(removeBook)
     mainContent.append(contentBox)
   }
 }

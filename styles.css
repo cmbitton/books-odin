@@ -49,23 +49,39 @@ main{
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: #CCC;
-    padding: 20px;
     border-radius: 5px;
 }
 input{
     height: 30px;
     border-radius: 5px;
     border: none;
+    padding-left: 5px;
+    font-size: 1.2rem;
 }
 input[type="checkbox"]{
     width: 25px;
     height: 25px;
 }
+input[type="number"]{
+    width: 60px;
+}
+/*remove ticker on number input*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 h2{
     font-size: 2rem;
     text-align: center;
     padding: 5px;
-    margin-bottom: 10px;
+    margin: 0px 10px 10px 10px;
 }
 label{
     display: inline-block;
@@ -74,8 +90,8 @@ label{
 form{
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 div.form-container:last-of-type label{
     width: 230px;
@@ -89,12 +105,35 @@ div.form-container{
 }
 button[type="submit"]{
     cursor: pointer;
-    margin-top: 20px;
+    width: 120px;
+    align-self: center;
     padding: 10px 12px;
     border-radius: 5px;
     border: none;
     background-color: rgba(15, 192, 15, 0.61);
     font-size: 1rem;
+    transition: all 100ms ease-in-out;
+}
+button[type="submit"]:hover{
+    box-shadow: 0px 0px 6px 1px #606060;
+    transform: scale(1.1);
+}
+.remove-book-button{
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 8px;
+    border: none;
+    border-radius: 3px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgb(221, 0, 0);
+    background-color: rgba(255, 174, 174, 0.568);
+}
+.remove-book-button:hover{
+    background-color: rgb(230, 90, 90);
+    color: white;
 }
 .validation-message{
     color: rgb(206, 0, 0);
@@ -103,11 +142,12 @@ button[type="submit"]{
     display: grid;
     gap: 20px;
     padding: 0px 20px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 450px));
     justify-content: center;
 }
 
 .book-container{
+    position: relative;
     background-color: #EEE;
     height: fit-content;
     padding: 10px;
