@@ -27,6 +27,21 @@ function removeBookFromLibrary(e){
   displayBooks();
 }
 
+function changeReadStatus(e, book) {
+  if (e.target.classList.contains('read')){
+    e.target.classList.toggle('read');
+    e.target.classList.add('not-read');
+    e.target.textContent = 'Not Read';
+    book.hasRead = false;
+  }
+  else{
+    e.target.classList.toggle('not-read');
+    e.target.classList.add('read');
+    e.target.textContent = 'Have Read';
+    book.hasRead = true;
+  }
+}
+
 function displayBooks(){
   const mainContent = document.querySelector('.book-grid');
   mainContent.innerHTML = '';
@@ -36,26 +51,44 @@ function displayBooks(){
     const bookAuthor = document.createElement('p');
     const pageNumber = document.createElement('p');
     const removeBook = document.createElement('button');
+    const readButton = document.createElement('button');
 
     contentBox.classList.add('book-container');
     contentBox.setAttribute('data-book-number', myLibrary.indexOf(book))
     bookTitle.classList.add('book-title');
     bookAuthor.classList.add('book-author');
     pageNumber.classList.add('book-page-number');
+    readButton.classList.add('read-button');
     removeBook.classList.add('remove-book-button');
     removeBook.setAttribute('type', 'button');
     removeBook.textContent = 'X'
     removeBook.addEventListener('click', removeBookFromLibrary)
     
+    readButton.addEventListener('click', (e) => {
+      changeReadStatus(e, book);
+    })
 
     bookTitle.textContent = book.title;
     bookAuthor.textContent = book.author;
-    pageNumber.textContent = book.pageNumber;
+    pageNumber.textContent = `${book.pageNumber} pages`;
+    if (book.hasRead) {
+      readButton.textContent = 'Have Read';
+      readButton.classList.add('read');
+    }
+    else {
+      readButton.textContent = 'Not Read';
+      readButton.classList.add('not-read');
+    }
 
+    readButton.addEventListener('click', (e) => {
+
+    })
+    
     contentBox.append(bookTitle);
     contentBox.append(bookAuthor);
     contentBox.append(pageNumber);
     contentBox.append(removeBook)
+    contentBox.append(readButton)
     mainContent.append(contentBox)
   }
 }
@@ -75,7 +108,6 @@ newBookButton.addEventListener('click', (e) => {
 window.addEventListener('click', (e) => {
   let reviewNode = e.target;
   let exitForm = true;
-  console.log(reviewNode.nodeName)
   while (reviewNode && reviewNode.nodeName !== 'BODY') {
     if (reviewNode.classList.contains('book-form')) {
       exitForm = false;
@@ -110,11 +142,11 @@ function addNewBook() {
   const mainContent = document.querySelector('.book-grid');
   addBookButton.addEventListener('click', (e) => {
     if (validateNewBookForm()) {
-      console.log(e)
       const bookTitle = document.querySelector('#new-book-title');
       const bookAuthor = document.querySelector('#new-book-author');
       const pageNumber = document.querySelector('#new-book-pages');
-      addBookToLibrary(bookTitle.value, bookAuthor.value, pageNumber.value);
+      const hasRead = document.querySelector('#new-book-read').checked;
+      addBookToLibrary(bookTitle.value, bookAuthor.value, pageNumber.value, hasRead);
       mainContent.innerHTML = '';
       displayBooks();
       toggleAddBookModal();
@@ -127,6 +159,4 @@ function addNewBook() {
   })
 }
 addNewBook();
-addBookToLibrary('Great Gatsby', 'fscott', '200', false);
-addBookToLibrary('Diary of a wimpy Kid', 'Jeff Kinney', '150', true);
 displayBooks();

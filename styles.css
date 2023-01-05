@@ -13,6 +13,7 @@ body{
     margin: 0;
     font-family: sans-serif;
     background-color: #EEE;
+    color: #222;
 }
 
 header{
@@ -118,6 +119,23 @@ button[type="submit"]:hover{
     box-shadow: 0px 0px 6px 1px #606060;
     transform: scale(1.1);
 }
+.read-button{
+    cursor: pointer;
+    padding: 12px 0px;
+    margin: 10px 0px;
+    width: 150px;
+    border: none;
+    border-radius: 3px;
+    font-size: 1.4rem;
+    align-self: center;
+}
+.read{
+    background-color: rgba(15, 192, 15, 0.61);
+}
+
+.not-read{
+    background-color: rgb(230, 90, 90);
+}
 .remove-book-button{
     cursor: pointer;
     position: absolute;
@@ -128,7 +146,7 @@ button[type="submit"]:hover{
     border-radius: 3px;
     font-size: 1.5rem;
     font-weight: bold;
-    color: rgb(221, 0, 0);
+    color: rgb(200, 0, 0);
     background-color: rgba(255, 174, 174, 0.568);
 }
 .remove-book-button:hover{
@@ -137,6 +155,8 @@ button[type="submit"]:hover{
 }
 .validation-message{
     color: rgb(206, 0, 0);
+    text-align: center;
+    margin-bottom: 20px;
 }
 .book-grid{
     display: grid;
@@ -148,10 +168,16 @@ button[type="submit"]:hover{
 
 .book-container{
     position: relative;
+    display: flex;
+    flex-direction: column;
     background-color: #EEE;
     height: fit-content;
     padding: 10px;
     border-radius: 5px;
+}
+.book-author, .book-page-number{
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .hidden{
