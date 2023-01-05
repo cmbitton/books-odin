@@ -141,6 +141,7 @@ function addNewBook() {
   const addBookButton = document.querySelector('.add-book-button');
   const mainContent = document.querySelector('.book-grid');
   addBookButton.addEventListener('click', (e) => {
+    e.preventDefault();
     if (validateNewBookForm()) {
       const bookTitle = document.querySelector('#new-book-title');
       const bookAuthor = document.querySelector('#new-book-author');
