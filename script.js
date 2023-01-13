@@ -1,30 +1,34 @@
-let myLibrary = [];
-const bookForm = document.querySelector('.book-form');
-const newBookButton = document.querySelector('.new-book-button');
-const main = document.querySelector('main');
-const header = document.querySelector('header');
+class Library {
+  myLibrary = [];
+  bookForm = document.querySelector('.book-form');
+  newBookButton = document.querySelector('.new-book-button');
+  main = document.querySelector('main');
+  header = document.querySelector('header');
 
+  addBookToLibrary(title, author, pageNumber, hasRead) {
+    const book = new Books(title, author, pageNumber, hasRead);
+    this.myLibrary.push(book);
+  }
 
-function Books(title, author, pageNumber, hasRead) {
-  this.title = title,
-    this.author = author,
-    this.pageNumber = pageNumber,
-    this.hasRead = hasRead
+  removeBookFromLibrary(e){
+    const bookIndex = (e.target.parentNode.getAttribute('data-book-number'));
+    this.myLibrary.splice(bookIndex, 1);
+    displayBooks();
+  }
 }
 
-Books.prototype.info = function () {
-  return `${this.title}, by ${this.author}, ${this.pageNumber} pages, ${this.hasRead}`;
-}
+const library = new Library();
 
-function addBookToLibrary(title, author, pageNumber, hasRead) {
-  const book = new Books(title, author, pageNumber, hasRead);
-  myLibrary.push(book);
-}
-
-function removeBookFromLibrary(e){
-  const bookIndex = (e.target.parentNode.getAttribute('data-book-number'));
-  myLibrary.splice(bookIndex, 1);
-  displayBooks();
+class Books {
+  constructor(title, author, pageNumber, hasRead) {
+    this.title = title,
+      this.author = author,
+      this.pageNumber = pageNumber,
+      this.hasRead = hasRead;
+  }
+  info() {
+    return `${this.title}, by ${this.author}, ${this.pageNumber} pages, ${this.hasRead}`;
+  }
 }
 
 function changeReadStatus(e, book) {
@@ -45,7 +49,7 @@ function changeReadStatus(e, book) {
 function displayBooks(){
   const mainContent = document.querySelector('.book-grid');
   mainContent.innerHTML = '';
-  for(const book of myLibrary){
+  for(const book of library.myLibrary){
     const contentBox = document.createElement('div');
     const bookTitle =  document.createElement('h2');
     const bookAuthor = document.createElement('p');
@@ -54,7 +58,7 @@ function displayBooks(){
     const readButton = document.createElement('button');
 
     contentBox.classList.add('book-container');
-    contentBox.setAttribute('data-book-number', myLibrary.indexOf(book))
+    contentBox.setAttribute('data-book-number', library.myLibrary.indexOf(book))
     bookTitle.classList.add('book-title');
     bookAuthor.classList.add('book-author');
     pageNumber.classList.add('book-page-number');
@@ -62,7 +66,9 @@ function displayBooks(){
     removeBook.classList.add('remove-book-button');
     removeBook.setAttribute('type', 'button');
     removeBook.textContent = 'X'
-    removeBook.addEventListener('click', removeBookFromLibrary)
+    removeBook.addEventListener('click', (e) => {
+      library.removeBookFromLibrary(e);
+    })
     
     readButton.addEventListener('click', (e) => {
       changeReadStatus(e, book);
@@ -94,14 +100,14 @@ function displayBooks(){
 }
 
 function toggleAddBookModal(){
-  bookForm.classList.toggle('hidden')
+  library.bookForm.classList.toggle('hidden')
 }
 
-newBookButton.addEventListener('click', (e) => {
+library.newBookButton.addEventListener('click', (e) => {
   e.stopPropagation();
   toggleAddBookModal();
-  main.style.filter = 'brightness(50%)';
-  header.style.filter = 'brightness(50%)';
+  library.main.style.filter = 'brightness(50%)';
+  library.header.style.filter = 'brightness(50%)';
 });
 
 //hides add book modal
@@ -115,12 +121,12 @@ window.addEventListener('click', (e) => {
     }
     reviewNode = reviewNode.parentNode;
   }
-  if (exitForm && !bookForm.classList.contains('hidden')) {
+  if (exitForm && !library.bookForm.classList.contains('hidden')) {
     const validationMessage = document.querySelector('.validation-message');
     if (!validationMessage.classList.contains('hidden')) validationMessage.classList.toggle('hidden')
     toggleAddBookModal();
-    main.removeAttribute('style');
-    header.removeAttribute('style');
+    library.main.removeAttribute('style');
+    library.header.removeAttribute('style');
   }
 })
 
@@ -147,12 +153,12 @@ function addNewBook() {
       const bookAuthor = document.querySelector('#new-book-author');
       const pageNumber = document.querySelector('#new-book-pages');
       const hasRead = document.querySelector('#new-book-read').checked;
-      addBookToLibrary(bookTitle.value, bookAuthor.value, pageNumber.value, hasRead);
+      library.addBookToLibrary(bookTitle.value, bookAuthor.value, pageNumber.value, hasRead);
       mainContent.innerHTML = '';
       displayBooks();
       toggleAddBookModal();
-      main.removeAttribute('style');
-      header.removeAttribute('style');
+      library.main.removeAttribute('style');
+      library.header.removeAttribute('style');
     }
     else{
       displayFormValidation();
